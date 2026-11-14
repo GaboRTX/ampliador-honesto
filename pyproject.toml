@@ -1,0 +1,27 @@
+[project]
+name = "ampliador-honesto"
+version = "0.1.0"
+description = "Amplía capturas de pantalla chicas con un modelo de difusión y muestra qué parte del resultado inventó la IA."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "accelerate>=1.0",
+    "diffusers>=0.32",
+    "gradio>=6.0",
+    "numpy>=1.26",
+    "pillow>=10.4",
+    "protobuf>=4.25",
+    "scikit-image>=0.24",
+    "sentencepiece>=0.2",
+    "torch>=2.4",
+    "transformers>=4.50",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

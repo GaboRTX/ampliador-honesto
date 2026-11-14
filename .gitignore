@@ -1,0 +1,27 @@
+# Entorno de Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secretos (NUNCA al repo)
+.env
+*.key
+
+# Cachés de modelos de Hugging Face (pesan varios GB)
+.cache/
+huggingface/
+*.safetensors
+*.bin
+*.ckpt
+
+# Resultados generados por la app
+salidas/
+flagged/
+.gradio/
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
