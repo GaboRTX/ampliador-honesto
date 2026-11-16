@@ -70,7 +70,7 @@ def avance(progreso: gr.Progress, desde: float, hasta: float, texto: str):
 
 
 # --------------------------------------------------------- pestaña principal
-def procesar(ruta, intensidad, preset, usar_analisis, progreso=gr.Progress()):
+def procesar(ruta, intensidad, preset, usar_analisis, descripcion="", semilla=42, progreso=gr.Progress()):
     imagen = abrir_imagen(ruta)
     ancho_original, alto_original = imagen.size
 
@@ -80,6 +80,8 @@ def procesar(ruta, intensidad, preset, usar_analisis, progreso=gr.Progress()):
             imagen, intensidad, preset,
             al_avanzar=avance(progreso, 0.05, 0.80,
                               "Reconstruyendo detalles con el modelo de difusión (dibujando lo que falta)..."),
+            semilla=int(semilla or 0),
+            descripcion=descripcion or "",
         )
     except ValueError as error:
         raise gr.Error(str(error)) from error
@@ -107,7 +109,8 @@ def procesar(ruta, intensidad, preset, usar_analisis, progreso=gr.Progress()):
     )
 
     detalles = (f"modelo={diffusion.MODELO_ID}; noise_level={ampliada.noise_level}; "
-                f"pasos={ampliada.pasos}; preset={preset}")
+                f"pasos={ampliada.pasos}; preset={preset}; semilla={int(semilla or 0)}; "
+                f"descripcion={descripcion or '-'}")
     archivo = honesty.guardar_con_aviso(ampliada.resultado, ruta_salida("ampliada_con_ia.png"), detalles)
 
     progreso(1.0, desc="Listo")
@@ -214,6 +217,15 @@ with gr.Blocks(title="Ampliador Honesto") as demo:
                     label="Cuánto puede inventar el modelo",
                     info="0 = se pega a tu imagen · 1 = se toma mucha libertad (más nítido, más invento)",
                 )
+                descripcion = gr.Textbox(
+                    label="Opcional: ¿qué hay en la imagen?",
+                    placeholder="En inglés funciona mejor. Ej.: a cat on a couch",
+                    info="El texto guía lo que el modelo inventa: si decís 'cat', dibuja pelo de gato.",
+                )
+                with gr.Row():
+                    semilla = gr.Number(value=42, precision=0, label="Semilla",
+                                        info="Cambiala y el modelo inventa OTROS detalles")
+                    otra = gr.Button("🎲 Otra variante")
                 usar_analisis = gr.Checkbox(value=True, label="Revisar el resultado con un segundo modelo (SigLIP)")
                 boton = gr.Button("Ampliar ×4", variant="primary")
                 gr.Examples(
@@ -227,11 +239,11 @@ with gr.Blocks(title="Ampliador Honesto") as demo:
                     mapa_consistencia = gr.Image(type="pil", label="¿Respetó tu imagen? (rojo = cambió lo original)")
                 informe = gr.Markdown()
                 descarga = gr.File(label="Descargar (incluye etiqueta “Ampliada con IA”)")
-        boton.click(
-            procesar,
-            [entrada, intensidad, preset, usar_analisis],
-            [slider, mapa_inventado, mapa_consistencia, informe, descarga],
-        )
+        entradas = [entrada, intensidad, preset, usar_analisis, descripcion, semilla]
+        salidas = [slider, mapa_inventado, mapa_consistencia, informe, descarga]
+        boton.click(procesar, entradas, salidas)
+        # "Otra variante": cambia la semilla al azar y vuelve a ampliar.
+        otra.click(lambda: int(np.random.randint(0, 100_000)), None, semilla).then(procesar, entradas, salidas)
 
     with gr.Tab("Laboratorio: ¿cuánto se acerca a la verdad?"):
         gr.Markdown(

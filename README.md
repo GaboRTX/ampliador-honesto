@@ -73,6 +73,8 @@ En su notebook, el domingo a la tarde, mientras arma los posteos de la semana.
 - Ampliación ×4 con `stabilityai/stable-diffusion-x4-upscaler`
 - Control **“Cuánto puede inventar el modelo”** (mapea al parámetro `noise_level`)
 - Presets por tipo de imagen (dashboard, gráfico, foto): sin prompts técnicos
+- Descripción opcional de la imagen: muestra cómo el texto **guía** lo que el modelo inventa
+- Semilla y botón “Otra variante”: misma imagen, otros detalles inventados (prueba de que no son reales)
 - Comparador antes/después con deslizador (bicúbica vs IA)
 - Mapa de detalle inventado + prueba de consistencia
 - Análisis con SigLIP 2: nitidez relativa y detección de texto, números o caras
@@ -182,7 +184,7 @@ El riesgo principal para Tomás son los **números y las letras inventadas**. Si
 ### Principios de Human-AI Interaction aplicados
 
 **Transparencia:** aviso fijo de que la IA reconstruye; la barra de progreso explica cada etapa (“dibujando lo que falta”); se indica si corre en CPU o GPU y cuánto puede tardar.
-**Control:** deslizador “cuánto puede inventar”, presets por tipo de imagen, opción de activar el segundo modelo, comparador para ir y volver.
+**Control:** deslizador “cuánto puede inventar”, presets por tipo de imagen, descripción opcional, semilla y “Otra variante”, opción de activar el segundo modelo, comparador para ir y volver.
 **Explicabilidad:** informe en lenguaje simple con porcentaje de imagen inventada, veredicto de consistencia y opinión de SigLIP (siempre aclarando que puede equivocarse).
 **Honestidad sobre lo generado:** mapa de lo inventado, laboratorio con evidencia, etiqueta visible y metadato en la descarga. Nunca se usa la palabra “recuperar”.
 **Manejo de errores:** mensajes humanos con sugerencia (“La imagen pesa 15 MB. Probá con una de menos de 10 MB”), reintento automático con la mitad del tamaño si falta memoria, aviso cuando la imagen se achica.

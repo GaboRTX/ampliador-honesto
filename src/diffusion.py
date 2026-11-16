@@ -142,6 +142,7 @@ def ampliar(
     preset: str = "Captura de dashboard",
     al_avanzar: Callable[[float], None] | None = None,
     semilla: int = 42,
+    descripcion: str = "",
 ) -> ResultadoAmpliacion:
     """Amplía la imagen ×4 con difusión.
 
@@ -152,6 +153,10 @@ def ampliar(
     entrada, avisos = preparar_imagen(imagen)
     noise_level = intensidad_a_noise_level(intensidad)
     prompt = PRESETS.get(preset, PRESETS["Captura de dashboard"])
+    # La descripción de la persona usuaria va primero: es lo que más pesa.
+    # Ojo: el texto GUÍA lo que el modelo inventa (si decís "gato", dibuja pelo de gato).
+    if descripcion and descripcion.strip():
+        prompt = f"{descripcion.strip()}, {prompt}"
     pipe = cargar_modelo()
     generador = torch.Generator(device=DISPOSITIVO).manual_seed(int(semilla))
 
