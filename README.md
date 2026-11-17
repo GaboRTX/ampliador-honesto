@@ -1,6 +1,6 @@
 # 🔍 Ampliador Honesto
 
-> Amplía ×4 capturas chicas de dashboards y gráficos con un modelo de difusión, y le muestra a quien lo usa **qué parte del resultado inventó la IA**.
+> Amplía ×4 capturas y gráficos con un modelo de difusión, y le muestra a quien lo usa **qué parte del resultado inventó la IA**.
 
 ## Descripción
 
