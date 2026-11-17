@@ -44,16 +44,6 @@ En su notebook, el domingo a la tarde, mientras arma los posteos de la semana.
 
 **Declaración del proyecto:** Mi sistema permite que Tomás (analista de BI que publica contenido en Instagram) pueda ampliar capturas chicas de dashboards aplicando el upscaler ×4 de Stable Diffusion y verificando los resultados con SigLIP 2, una comparación con interpolación bicúbica y una prueba de consistencia. Le advierte que las letras y los números ampliados son una reconstrucción del modelo y que tiene que compararlos con la fuente antes de publicar.
 
-## Demo
-
-🎥 **Video (5 min):** [COMPLETAR: link a YouTube/Drive, público]
-
-![Pantalla principal](docs/capturas/principal.png)
-![Mapa de lo inventado](docs/capturas/mapa.png)
-![Laboratorio de verificación](docs/capturas/laboratorio.png)
-
-> [COMPLETAR: sacar las capturas con la app corriendo y guardarlas en `docs/capturas/` con esos nombres]
-
 ## Qué es real y qué es inventado
 
 **Qué hace el modelo y qué no puede recuperar.** Al ampliar ×4, cada píxel se convierte en 16: **15 de cada 16 píxeles no existían**. La interpolación bicúbica los completa promediando vecinos (no inventa, por eso se ve borrosa). El modelo de difusión los completa con detalle *plausible* aprendido de millones de imágenes. En una captura de 128 px, un número de 5 px de alto **no tiene información suficiente** para saber qué dígito era: el modelo dibuja *un* dígito nítido, que puede no ser el original.
